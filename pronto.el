@@ -24,7 +24,7 @@
   (compile (format "bundle exec pronto run -c=%s" commit) 'pronto-compilation-mode))
 
 (defvar pronto-compilation-error-regexp-alist-alist
-  '((pronto "^ +# \\([0-9A-Za-z@_./:-]+\\.rb\\):\\([0-9]+\\):in" 1 2 nil 2 1)))
+  '((pronto "^\\([0-9A-Za-z@_./:-]+\\.rb\\):\\([0-9]+\\)" 1 2 nil 2 1)))
 
 (defvar pronto-compilation-error-regexp-alist
   (mapcar 'car pronto-compilation-error-regexp-alist-alist))
