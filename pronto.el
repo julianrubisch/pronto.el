@@ -1,4 +1,4 @@
-;;; package --- Summary
+;;; pronto.el --- Compilation mode for pronto
 
 ;;; Commentary:
 
@@ -30,4 +30,4 @@
   (mapcar 'car pronto-compilation-error-regexp-alist-alist))
 
 (provide 'pronto)
-;;; pronto ends here
+;;; pronto.el ends here
