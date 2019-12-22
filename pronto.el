@@ -1,6 +1,15 @@
-;;; pronto.el --- Compilation mode for pronto
+;;; pronto.el --- Compilation mode for pronto -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2020 Julian Rubisch
+
+;; Author: Julian Rubisch <julian@julianrubisch.at>
+;; Version: 1.0
+;; Keywords: processes, tools
+;; URL: https://github.com/julianrubisch/pronto.el
 
 ;;; Commentary:
+;; Run pronto (https://github.com/prontolabs/pronto) in a compilation mode and
+;; presents errors in a browsable style.
 
 ;;; Code:
 (defvar pronto-last-commit nil
@@ -12,11 +21,15 @@
 (defun pronto-run (commit)
   "Run pronto against COMMIT."
   (interactive (list (read-string "Commit: " pronto-last-commit)))
-  (pronto-compile commit)
-  )
+  (pronto-compile commit))
 
 (define-compilation-mode pronto-compilation-mode "Pronto Compilation"
-  "Compilation mode for pronto output.")
+  "Compilation mode for pronto output."
+  (add-hook 'compilation-filter-hook 'pronto-colorize-compilation-buffer nil t))
+
+(defun pronto-colorize-compilation-buffer()
+  "Colorize the compilation buffer."
+  (ansi-color-apply-on-region compilation-filter-start (point)))
 
 (defun pronto-compile (commit)
   "Start a compilation against COMMIT."
