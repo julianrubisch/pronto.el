@@ -16,6 +16,8 @@
 (require 'compile)
 (require 'ansi-color)
 
+(defvar pronto-compilation-mode)
+
 (defvar pronto-last-commit nil
   "Last commit pronto was run against.")
 
@@ -29,7 +31,7 @@
 
 (define-compilation-mode pronto-compilation-mode "Pronto Compilation"
   "Compilation mode for pronto output."
-  (add-hook 'compilation-filter-hook 'pronto-colorize-compilation-buffer nil t))
+  (add-hook 'compilation-filter-hook #'pronto-colorize-compilation-buffer nil t))
 
 (defun pronto-colorize-compilation-buffer()
   "Colorize the compilation buffer."
@@ -38,7 +40,7 @@
 (defun pronto-compile (commit)
   "Start a compilation against COMMIT."
   (setq pronto-last-commit commit)
-  (compile (format "bundle exec pronto run -c=%s" commit) 'pronto-compilation-mode))
+  (compile (format "bundle exec pronto run -c=%s" commit) #'pronto-compilation-mode))
 
 (defvar pronto-compilation-error-regexp-alist-alist
   '((pronto "^\\([0-9A-Za-z@_./:-]+\\.rb\\):\\([0-9]+\\)" 1 2 nil 2 1)))
