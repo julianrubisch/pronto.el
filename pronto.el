@@ -6,12 +6,16 @@
 ;; Version: 1.0
 ;; Keywords: processes, tools
 ;; URL: https://github.com/julianrubisch/pronto.el
+;; Package-Requires: ((emacs "24"))
 
 ;;; Commentary:
 ;; Run pronto (https://github.com/prontolabs/pronto) in a compilation mode and
 ;; presents errors in a browsable style.
 
 ;;; Code:
+(require 'compile)
+(require 'ansi-color)
+
 (defvar pronto-last-commit nil
   "Last commit pronto was run against.")
 
