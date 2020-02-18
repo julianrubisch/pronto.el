@@ -1,4 +1,4 @@
-;;; pronto.el --- Compilation mode for pronto -*- lexical-binding: t; -*-
+;;; pronto.el --- Compilation mode for pronto stylechecks -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020 Julian Rubisch
 
@@ -10,13 +10,24 @@
 
 ;;; Commentary:
 ;; Run pronto (https://github.com/prontolabs/pronto) in a compilation mode and
-;; presents errors in a browsable style.
+;; present errors in an Emacs compilation buffer.
+
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Code:
 (require 'compile)
 (require 'ansi-color)
-
-(defvar pronto-compilation-mode)
 
 (defvar pronto-last-commit nil
   "Last commit pronto was run against.")
@@ -40,13 +51,13 @@
 (defun pronto-compile (commit)
   "Start a compilation against COMMIT."
   (setq pronto-last-commit commit)
-  (compile (format "bundle exec pronto run -c=%s" commit) #'pronto-compilation-mode))
+  (compile (format "bundle exec pronto run -c=%s" (shell-quote-argument commit)) #'pronto-compilation-mode))
 
 (defvar pronto-compilation-error-regexp-alist-alist
   '((pronto "^\\([0-9A-Za-z@_./:-]+\\.rb\\):\\([0-9]+\\)" 1 2 nil 2 1)))
 
 (defvar pronto-compilation-error-regexp-alist
-  (mapcar 'car pronto-compilation-error-regexp-alist-alist))
+  (mapcar #'car pronto-compilation-error-regexp-alist-alist))
 
 (provide 'pronto)
 ;;; pronto.el ends here
